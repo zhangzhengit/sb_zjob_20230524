@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+	function addJob(){
+		 
+		var id = $("#id").val();
+		var name = $("#name").val();
+		var cron = $("#cron").val();
+		var urlData={
+			 "id":id,
+			 "name":name,
+			 "cron":cron
+		};
+		
+		 $.ajax({
+	        type:"POST",
+	        url: "/add",
+	        data: JSON.stringify(urlData), 
+	        contentType : "application/json;charset=UTF-8",
+	        dataType: "json",
+	        success: function(result){
+		       	 if(result.code == 0){
+		       		 alert('新增成功');
+		       	     window.location.reload();
+		       	 } else {
+		       		 alert('新增失败：error=' + result.message);
+			
+		       	 }
+	        },
+	        error: function(result){
+		       		 alert('新增失败：error=' + result.message);
+	        }
+	    });
+	}
+
+
+
+</script> 
+
+<link rel="stylesheet" type="text/css" href="/css/index.css">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>zjob新建</title>
+</head>
+
+<body>
+	
+	<div class="act">
+		<ul>
+		</ul>
+	</div>
+	
+	<div class="draw">
+			<table>
+				<tr>
+					<td>名称</td>
+					<td><input type="text" id="name" value="${job.name}"></input></td>
+					<td>
+						与代码中@ZJobTask的name属性对应
+					</td>
+				</tr>
+				<tr>
+					<td>cron</td>
+					<td><input type="text" id="cron"  value="${job.cron}"></input></td>
+					<td>
+						<a href="https://www.pppet.net/" target="_blank">在线生成/验证cron</a>
+					</td>
+				</tr>
+				<tr>
+					<td>启用状态</td>
+					<td>默认不启用，请在job列表页面启用</td>
+				</tr>
+				
+				<tr>
+					<td></td>
+					<td>
+						<button type="submit" onclick="addJob()">确认新增</button>
+					</td>
+				</tr>
+
+			</table>
+			
+			
+			
+	</div>
+	
+</body>
+
+</html>

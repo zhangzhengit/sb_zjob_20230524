@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+	function update(id,status){
+// 		 $("#message").html("");
+		 
+// 		var name = $("#name").val();
+// 		var password = $("#password").val();
+		var urlData={
+			 "id":id,
+			 "status":status
+		};
+		
+// 		 $("#message").html("正在登录中......");
+	
+		 $.ajax({
+	        type:"POST",
+	        url: "/update",
+	        data: JSON.stringify(urlData), 
+	        contentType : "application/json;charset=UTF-8",
+	        dataType: "json",
+	        success: function(result){
+		       	 if(result.code == 0){
+		       		 alert('修改成功');
+		       		 window.location.href="/";
+		       	 } else {
+	// 	           	 $("#message").html(result.message);
+		       		 alert('修改失败：error=' + result.message);
+			
+		       	 }
+	        },
+	        error: function(result){
+		       		 alert('修改失败：error=' + result.message);
+// 	            $("#message").html('操作出错：' + result.message);
+	        }
+	    });
+	}
+	
+	
+	function executeImmediatel(id,type){
+		var urlData={
+			 "id":id,
+			 "type":type
+		};
+		
+		 $.ajax({
+	        type:"POST",
+	        url: "/executeImmediatel",
+	        data: JSON.stringify(urlData), 
+	        contentType : "application/json;charset=UTF-8",
+	        dataType: "json",
+	        success: function(result){
+		       	 if(result.code == 0){
+		       		 alert('操作成功:\n' + result.message);
+		       		 window.location.href="/";
+		       	 } else {
+		       		 alert('操作失败：error=' + result.message);
+			
+		       	 }
+	        },
+	        error: function(result){
+		       		 alert('操作失败：error=' + result.message);
+	        }
+	    });
+	}
+
+
+
+</script> 
+
+<link rel="stylesheet" type="text/css" href="/css/index.css">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>zjob配置列表</title>
+</head>
+
+<body>
+	
+	<div class="act">
+		<ul>
+		</ul>
+	</div>
+	
+	<div class="draw">
+		<table>
+			<th colspan="8">zjob配置列表</th>
+			<tr>
+				<td>序号</td>
+				<td>ID</td>
+				<td>名称</td>
+				<td>当前状态</td>
+				<td>cron</td>
+				<td>client</td>
+				<td>client心跳时间</td>
+				<td>备注信息</td>
+				<td>创建时间</td>
+				<td>修改时间</td>
+				<td>推送时间</td>
+				<td>提示信息</td>
+				<td>操作</td>
+			</tr>
+			<#list jobList as aa>
+				<tr>
+					<td>${aa_index + 1}</td>
+					<td>${aa.id}</td>
+					<td>${aa.name}</td>
+					<td 	
+						<#if aa.status == 1>style="background-color: #7FFFD4"</#if>
+						<#if aa.status == 2>style="background-color: yellow"</#if>
+					>
+						<#if aa.status == 1>启用</#if>
+						<#if aa.status == 2>停用</#if>
+					</td>
+					<td>${aa.cron}</td>
+					<td>
+						<#list aa.onlineHostList as o>
+							${o}
+						</#list>
+					</td>
+					<td>
+						<#if aa.heartbeatTime??>
+							${aa.heartbeatTime?string('yyyy.MM.dd HH:mm:ss')}</td>
+						</#if>
+					<td>${aa.remark}</td>
+					<td>${aa.createTime}</td>
+					<td>${aa.updateTime}</td>
+					<td>${aa.pushTime}</td>
+					<td <#if aa.updatePushRemark?length gt 0>style="background-color: #7FFFD4"</#if>>
+						${aa.updatePushRemark}
+					</td>
+					<td>
+						<#if aa.status == 1>
+							<a href="javascript:void(0);" target="_self" onclick="update(${aa.id},2)">停用</a>
+						</#if>
+						<#if aa.status == 2>
+							<a href="javascript:void(0);" target="_self" onclick="update(${aa.id},1)">启用</a>
+						</#if>
+					
+						<a href="/detail?id=${aa.id}" target="_blank">详情/编辑</a>
+						<a href="/log?id=${aa.id}" target="_blank">执行日志</a>
+						<a href="javascript:void(0);" target="_self" onclick="executeImmediatel(${aa.id},1)">立即执行</a>
+						<a href="javascript:void(0);" target="_self" onclick="executeImmediatel(${aa.id},2)">推送配置</a>
+					</td>
+				</tr>
+			</#list>
+		</table>
+		
+		<p>
+				<a href="/add" target="_blank">新建一个job</a>
+				<br/>
+				<a href="https://www.pppet.net/" target="_blank">在线生成/验证cron</a>
+		</p>
+	</div>
+	
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+	function updateXXX(){
+		 
+		var id = $("#id").val();
+		var name = $("#name").val();
+		var cron = $("#cron").val();
+		var remark = $("#remark").val();
+		var urlData={
+			 "id":id,
+			 "name":name,
+			 "remark":remark,
+			 "cron":cron
+		};
+		
+		 $.ajax({
+	        type:"POST",
+	        url: "/update",
+	        data: JSON.stringify(urlData), 
+	        contentType : "application/json;charset=UTF-8",
+	        dataType: "json",
+	        success: function(result){
+		       	 if(result.code == 0){
+		       		 alert('修改成功');
+		       	     window.location.reload();
+		       	 } else {
+		       		 alert('修改失败：error=' + result.message);
+			
+		       	 }
+	        },
+	        error: function(result){
+		       		 alert('修改失败：error=' + result.message);
+	        }
+	    });
+	}
+
+
+
+</script> 
+
+<link rel="stylesheet" type="text/css" href="/css/index.css">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>zjob详情</title>
+</head>
+
+<body>
+	
+	<div class="act">
+		<ul>
+		</ul>
+	</div>
+	
+	<div class="draw">
+			<table>
+				<tr>
+					<input type="hidden" id="id" value=${job.id}></input>
+					<td>ID</td>
+					<td>${job.id}</td>
+					<td>
+						唯一ID
+					</td>
+				</tr>
+				<tr>
+					<td>名称</td>
+					<td><input type="text" id="name" value="${job.name}"></input></td>
+					<td>
+						与代码中@ZJobTask的name属性对应，修改名称后需修改代码
+					</td>
+				</tr>
+				<tr>
+					<td>cron</td>
+					<td><input type="text" id="cron"  value="${job.cron}"></input></td>
+					<td>
+						<a href="https://www.pppet.net/" target="_blank">在线生成/验证cron</a>
+					</td>
+				</tr>
+				<tr>
+					<td>创建时间</td>
+					<td>${job.createTime}</td>
+				</tr>
+				<tr>
+					<td>备注信息</td>
+					<td><input type="text" id="remark"  value="${job.remark}"></input></td>
+					<td>填写job的备注信息</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<button type="submit" onclick="updateXXX()">确认修改</button>
+					</td>
+				</tr>
+
+			</table>
+			
+			
+			<table>
+			<th colspan="3">修改记录</th>
+			<tr>
+				<td>序号</td>
+				<td>修改时间</td>
+				<td>旧值</td>
+				<td>新值</td>
+				<td>日志内容</td>
+			</tr>
+			<#list logList as aa>
+				<tr>
+					<td>${aa_index + 1}</td>
+					<td>${aa.createTime}</td>
+					<td>${aa.oldValue}</td>
+					<td>${aa.newValue}</td>
+					<td>${aa.jobLog}</td>
+				</tr>
+			</#list>
+		</table>
+			
+	</div>
+	
+</body>
+
+</html>

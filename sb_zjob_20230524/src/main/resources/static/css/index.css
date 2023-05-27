@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+body {
+	background-color: #333333;
+	background-repeat: fixed;
+}
+
+div {
+	text-align: center;
+	width: 99%;
+	height: 100%;
+	border: 2px solid pink;
+	border-width: 0px;
+	/* 	border-style: soild; */
+	border-style: dashed dashed dashed dashed;
+	/*  	padding: 1px;  */
+	/* 	margin: auto; */
+}
+
+p.user {
+	color: gray;
+	font-size: 11px;
+	text-align: right;
+	font-style: inherit;
+	margin: 0;
+	background-color: #333333;
+	padding: 0;
+}
+
+p {
+	color: #D0EE01;
+	font-size: 20px;
+	text-align: center;
+	font-style: inherit;
+}
+
+p.title {
+	font-size: 20px;
+	color: red;
+}
+
+
+button {
+	font-size: 20px;
+	color: white;
+}
+
+p.act {
+	font-size: 20px;
+	color: red;
+}
+
+p.desc {
+	font-size: 20px;
+	color: red;
+}
+
+input {
+	
+	font-size: 20px;
+	color: white;
+}
+
+
+* {
+	margin: 8;
+	background-color: #333333;
+	padding: 8;
+}
+
+p * {
+	color: green;
+}
+
+ul li {
+	font-size: 30px;
+	width: auto;
+	height: 48px;
+	list-style-type: none;
+	padding: 4px 30px 4px 30px;
+	margin: 2px;
+	display: inline-block;
+	border: 1px solid gray;
+	/* 	background-color: gray; */
+	box-shadow: 1px 2px 6px 6px rgba(0, 0, 0.1, 0.5);
+}
+
+ul li a {
+	color: gray;
+	/* 	color: green; */
+	font-size: 20px;
+}
+
+a {
+	color: white;
+	/* 	color: green; */
+	font-size: 20px;
+}
+
+
+a:hover {
+	color: red;
+}
+
+.yue {
+	color: red;
+}
+
+.draw {
+	font-size: 20px;
+	color: white;
+	text-align: center;
+/* 	height: 700px; */
+/* 	overflow: scroll; */
+}
+
+.pdraw {
+	font-size: 20px;
+	color: red;
+}
+
+.act {
+	color: red;
+	font-size: 22px;
+}
+
+.noticeCountDdengyu0 {
+	color: gray;
+}
+
+.noticeCountDayu0 {
+	color: red;
+}
+
+table {
+ 	border: 1px solid gray; 
+	font-size: 20px;
+	width: auto;
+	margin: auto;
+/*  	background-color: pink;  */
+}
+
+table th {
+	color: yellow;
+	text-align: center;
+}
+
+table tr td {
+	font-size: 20px;
+	color: rgb(64, 128, 128);
+ 	border: 1px solid gray; 
+ 	text-align: left;
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+	function logsearch() {
+		var keyword = $('#keyword').val();
+		window.location.href="/log?id=1&keyword="+keyword+"&pn=1&ps=${size}";
+	}
+	
+	function reset() {
+		var keyword = $('#keyword').val();
+		window.location.href="/log?id=1&pn=1&ps=${size}";
+	}
+
+</script> 
+
+<link rel="stylesheet" type="text/css" href="/css/index.css">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>job执行日志：[${job.id}- ${job.name}]</title>
+</head>
+
+<body>
+	
+	<div class="act">
+		<ul>
+		</ul>
+	</div>
+	
+	<div class="draw">
+		<table>
+			<th colspan="8">job执行日志：[${job.id}- ${job.name}]
+				
+				<input type="text" placeholder="输入关键字模糊查询" id="keyword" value="${keyword}"></input>
+			
+			   	<a href="javascript:void(0);" target="_self" onclick="logsearch()">查询</a>
+			   	
+			   	<a href="javascript:void(0);" target="_self" onclick="reset()">重置查询</a>
+			
+			</th>
+			<tr>
+				<td>序号</td>
+				<td>执行状态</td>
+				<td>开始执行时间</td>
+				<td>执行结束时间</td>
+				<td>异常时间</td>
+				<td>job执行Log</td>
+				<td>jobtaskId</td>
+				<td>jobDescription</td>
+				<td>jobHost</td>
+				<td>jobPort</td>
+			</tr>
+			<#list content as aa>
+				<tr>
+					<td>${aa_index + 1}</td>
+					<td>
+						<#if aa.status == 1>成功</#if>
+						<#if aa.status == 2>异常</#if>
+					</td>
+					<td>${aa.executionTime}</td>
+					<td>${aa.endTime}</td>
+					<td>${aa.exceptionTime}</td>
+					<td>
+						<#if aa.jobLog?length gt 30>
+							${aa.jobLog?substring(0,29)}...
+							<a href="/logDetail?id=${aa.id}" target="_blank">详情</a>
+						<#else>
+							${aa.jobLog}
+						</#if>
+					</td>
+					<td>${aa.jobtaskId}</td>
+					<td>${aa.jobDescription}</td>
+					<td>${aa.jobHost}</td>
+					<td>${aa.jobPort}</td>
+					
+				</tr>
+			</#list>
+		</table>
+		
+		<div class="page">
+			<p style="padding-left: 50px; font-size: 20px">
+				当前第${number}/${totalPages}页 | 当前页有${numberOfElements}条 | 每页显示${size}条
+				| 总共${totalElements}条</p>
+	
+			<p style="padding-left: 50px; font-size: 20px">
+	
+				<a href="/log?id=${job.id}&pn=1&ps=${size}&keyword=${keyword}">首页  </a>
+	
+				<#if number gt 1> <a href="/log?id=${job.id}&pn=${number-1}&ps=${size}&keyword=${keyword}">上一页</a>
+				<#else> <!-- 				(没有上一页了) --></#if>
+	
+				<#if number lt totalPages>
+				 <a
+					href="/log?id=${job.id}&pn=${number+1}&ps=${size}&keyword=${keyword}">下一页</a> <#else> <!-- 				(没有下一页了) --></#if>
+	
+				<a href="/log?id=${job.id}&pn=${totalPages}&ps=${size}&keyword=${keyword}">   尾页</a>
+			</p>
+		</div>
+		
+	</div>
+	
+</body>
+
+</html>
