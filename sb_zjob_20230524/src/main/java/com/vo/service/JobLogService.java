@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +12,6 @@ import com.vo.dto.AddJobLogDTO;
 import com.vo.entity.JobEntity;
 import com.vo.entity.JobLogEntity;
 import com.vo.entity.JobLogStatusEnum;
-import com.vo.entity.JobResultEntity;
 import com.vo.repository.JobLogRepository;
 import com.vo.repository.JobRepository;
 import com.votool.common.CR;
